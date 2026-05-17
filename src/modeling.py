@@ -99,10 +99,32 @@ def run_experiments(df: pd.DataFrame) -> pd.DataFrame:
     engineered_categorical = ["Sex", "Embarked", "AgeGroup", "Title"]
 
     configs = [
+        # Base 실험 (전처리 없음)
         ExperimentConfig("Base", None, None, None, False, False),
+        
+        # Mean Imputation 조합
         ExperimentConfig("Exp-1", "mean", "onehot", "standard", False, True),
-        ExperimentConfig("Exp-2", "median", "label", "minmax", True, True),
-        ExperimentConfig("Exp-3", "most_frequent", "onehot", "robust", True, True),
+        ExperimentConfig("Exp-2", "mean", "onehot", "standard", True, True),
+        ExperimentConfig("Exp-3", "mean", "label", "standard", False, True),
+        ExperimentConfig("Exp-4", "mean", "label", "standard", True, True),
+        ExperimentConfig("Exp-5", "mean", "onehot", "minmax", False, True),
+        ExperimentConfig("Exp-6", "mean", "label", "minmax", True, True),
+        
+        # Median Imputation 조합
+        ExperimentConfig("Exp-7", "median", "onehot", "minmax", False, True),
+        ExperimentConfig("Exp-8", "median", "onehot", "minmax", True, True),
+        ExperimentConfig("Exp-9", "median", "label", "minmax", False, True),
+        ExperimentConfig("Exp-10", "median", "label", "minmax", True, True),
+        ExperimentConfig("Exp-11", "median", "onehot", "robust", False, True),
+        ExperimentConfig("Exp-12", "median", "label", "robust", True, True),
+        
+        # Most Frequent Imputation 조합
+        ExperimentConfig("Exp-13", "most_frequent", "onehot", "robust", False, True),
+        ExperimentConfig("Exp-14", "most_frequent", "onehot", "robust", True, True),
+        ExperimentConfig("Exp-15", "most_frequent", "label", "robust", False, True),
+        ExperimentConfig("Exp-16", "most_frequent", "label", "robust", True, True),
+        ExperimentConfig("Exp-17", "most_frequent", "onehot", "standard", False, True),
+        ExperimentConfig("Exp-18", "most_frequent", "label", "minmax", True, True),
     ]
 
     results = []

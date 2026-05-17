@@ -73,12 +73,44 @@ python main.py
 - `results/figures/` : EDA 및 성능 시각화 이미지
 
 ## 7. 실험 설계
+본 프로젝트는 다음의 조합별 실험을 수행하여 전처리 전략의 효과를 비교합니다.
+
+### 기본 실험
 | 실험 | 결측치 처리 | 인코딩 | 스케일링 | Feature Selection |
 |---|---|---|---|---|
 | Base | 없음 | 없음 | 없음 | 없음 |
-| Exp-1 | Mean | One-Hot | StandardScaler | X |
-| Exp-2 | Median | Label | MinMaxScaler | O |
-| Exp-3 | Most Frequent | One-Hot | RobustScaler | O |
+
+### Mean Imputation 조합
+| 실험 | 결측치 처리 | 인코딩 | 스케일링 | Feature Selection |
+|---|---|---|---|---|
+| Exp-1 | Mean | One-Hot | Standard | X |
+| Exp-2 | Mean | One-Hot | Standard | O |
+| Exp-3 | Mean | Label | Standard | X |
+| Exp-4 | Mean | Label | Standard | O |
+| Exp-5 | Mean | One-Hot | MinMax | X |
+| Exp-6 | Mean | Label | MinMax | O |
+
+### Median Imputation 조합
+| 실험 | 결측치 처리 | 인코딩 | 스케일링 | Feature Selection |
+|---|---|---|---|---|
+| Exp-7 | Median | One-Hot | MinMax | X |
+| Exp-8 | Median | One-Hot | MinMax | O |
+| Exp-9 | Median | Label | MinMax | X |
+| Exp-10 | Median | Label | MinMax | O |
+| Exp-11 | Median | One-Hot | Robust | X |
+| Exp-12 | Median | Label | Robust | O |
+
+### Most Frequent Imputation 조합
+| 실험 | 결측치 처리 | 인코딩 | 스케일링 | Feature Selection |
+|---|---|---|---|---|
+| Exp-13 | Most Frequent | One-Hot | Robust | X |
+| Exp-14 | Most Frequent | One-Hot | Robust | O |
+| Exp-15 | Most Frequent | Label | Robust | X |
+| Exp-16 | Most Frequent | Label | Robust | O |
+| Exp-17 | Most Frequent | One-Hot | Standard | X |
+| Exp-18 | Most Frequent | Label | MinMax | O |
+
+각 실험은 **Logistic Regression**과 **Random Forest** 2개 모델로 평가되어 총 38개의 결과를 도출합니다.
 
 ## 8. 생성된 파생 변수
 - `FamilySize` : `SibSp + Parch + 1`

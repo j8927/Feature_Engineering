@@ -35,7 +35,7 @@ def _get_scaler(name: Optional[str]):
 
 def _get_encoder(name: Optional[str]):
     if name is None:
-        return "drop"
+        return "passthrough"
     if name.lower() == "onehot":
         return OneHotEncoder(handle_unknown="ignore", sparse_output=False)
     if name.lower() == "label":
@@ -50,7 +50,7 @@ def build_pipeline(config: ExperimentConfig, numeric_features: List[str], catego
         categorical_pipe = Pipeline([("encoder", _get_encoder(config.encoding))])
     else:
         numeric_pipe = Pipeline([
-            ("imputer", SimpleImputer(strategy=config.imputer if config.imputer != "most_frequent" else "median")),
+            ("imputer", SimpleImputer(strategy=config.imputer)),
             ("scaler", _get_scaler(config.scaler)),
         ])
         categorical_pipe = Pipeline([

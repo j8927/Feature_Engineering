@@ -109,4 +109,3 @@ git remote add origin 본인깃허브주소
 git push -u origin main
 ```
 
-PDF 보고서에는 GitHub 저장소 주소를 함께 기재하면 됩니다.

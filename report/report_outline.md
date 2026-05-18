@@ -130,6 +130,16 @@ SelectKBest(k=10)를 적용한 실험과 미적용 실험 비교:
 ### 추천 사항
 Titanic 데이터셋의 경우, Feature Selection 없이 모든 파생 변수를 포함하는 것이 최적
 
+## 8-1. SHAP / LIME 설명 가능성 분석
+- SHAP 분석을 통해 `FarePerPerson`, `Title`, `AgeGroup` 등 파생 변수가 높은 기여도를 보임
+- LIME 예측 설명에서는 개별 샘플 기준으로 `Sex`, `FarePerPerson`, `AgeGroup` 순으로 생존 예측에 기여
+- 모델 해석이 가능한 파이프라인을 구성하여 설명 가능성과 신뢰도를 함께 확보
+
+## 8-2. AutoML 비교 실험
+- TPOT AutoML을 활용한 자동 모델 탐색 및 하이퍼파라미터 탐색 수행
+- AutoML 결과는 기존 수동 실험과 유사한 수준의 성능을 보이며, TPOT에서 생성된 최적 파이프라인 코드를 `results/metrics/tpot_exported_pipeline.py`로 저장
+- AutoML은 탐색 시간 대비 효율적인 모델 후보 추천 도구로 활용 가능
+
 ## 9. 결론
 
 ### 1. 가장 효과적인 전처리 전략
@@ -187,5 +197,6 @@ Titanic 데이터셋의 경우, Feature Selection 없이 모든 파생 변수를
 - scikit-learn Pipeline 객체 활용 ✅
 - ColumnTransformer 기반 전처리 ✅
 - GridSearchCV를 통한 하이퍼파라미터 최적화 ✅
-- 18개 조합 × 2 모델 실험 추가 (기본 4개 이상) ✅
-- 실험별 성능 시각화 고도화 ✅
+- SHAP / LIME 기반 설명 가능성 분석 ✅
+- TPOT AutoML 비교 실험 ✅
+- Feature Importance 시각화 고도화 ✅

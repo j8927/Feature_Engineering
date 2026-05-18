@@ -3,7 +3,8 @@ from src.data_loader import load_titanic
 from src.feature_engineering import add_titanic_features
 from src.eda import run_eda
 from src.modeling import run_experiments, run_grid_search_for_best
-from src.visualize_results import plot_metrics
+from src.visualize_results import plot_metrics, plot_feature_importance
+from src.explainability import run_shap_lime_analysis, run_automl_comparison
 
 
 def main():
@@ -52,6 +53,18 @@ def main():
     grid_result.to_csv("results/metrics/gridsearch_result.csv", index=False)
     print("\nGridSearchCV Result")
     print(grid_result)
+
+    # Explainability analysis using SHAP and LIME
+    best_pipe, shap_lime_summary = run_shap_lime_analysis(df_fe)
+    shap_lime_summary.to_csv("results/metrics/shap_lime_summary.csv", index=False)
+    plot_feature_importance(best_pipe, ["Pclass", "Age", "SibSp", "Parch", "Fare", "FamilySize", "IsAlone", "FarePerPerson"], ["Sex", "Embarked", "AgeGroup", "Title"])
+    print("\nSHAP/LIME explainability summary")
+    print(shap_lime_summary)
+
+    # AutoML comparison experiment
+    auto_ml_result = run_automl_comparison(df_fe)
+    print("\nAutoML comparison result")
+    print(auto_ml_result)
 
 
 if __name__ == "__main__":

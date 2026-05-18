@@ -70,7 +70,10 @@ python main.py
 - `results/metrics/missing_ratio.csv` : 결측치 비율 분석
 - `results/metrics/experiment_results.csv` : 실험별 모델 성능 비교
 - `results/metrics/gridsearch_result.csv` : GridSearchCV 최적 하이퍼파라미터
-- `results/figures/` : EDA 및 성능 시각화 이미지
+- `results/metrics/shap_lime_summary.csv` : SHAP 및 LIME 설명 가능성 분석 요약
+- `results/metrics/automl_result.csv` : AutoML(TPOT) 비교 실험 성능
+- `results/metrics/tpot_exported_pipeline.py` : TPOT AutoML에서 생성한 최적 파이프라인 코드
+- `results/figures/` : EDA, 모델 성능, SHAP/LIME 및 Feature Importance 시각화 이미지
 
 ## 7. 실험 설계
 본 프로젝트는 다음의 조합별 실험을 수행하여 전처리 전략의 효과를 비교합니다.
@@ -130,7 +133,9 @@ python main.py
 - `sklearn.Pipeline` 객체 활용
 - `ColumnTransformer` 기반 전처리
 - `GridSearchCV` 적용
-- 시각화 기반 비교 분석
+- `SHAP` 및 `LIME` 기반 설명 가능성 분석
+- `TPOT` AutoML 비교 실험
+- Feature Importance 시각화 고도화
 
 ## 11. 보고서 작성 안내
 - 데이터셋 소개

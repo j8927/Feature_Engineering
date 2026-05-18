@@ -77,6 +77,30 @@ def build_pipeline(config: ExperimentConfig, numeric_features: List[str], catego
     return Pipeline(steps)
 
 
+def get_transformed_feature_names(preprocessor: ColumnTransformer, numeric_features: List[str], categorical_features: List[str]) -> List[str]:
+    transformed_features = []
+    transformed_features.extend(numeric_features)
+
+    cat_transformer = preprocessor.named_transformers_.get("cat")
+    if cat_transformer is not None:
+        # If the categorical branch is itself a Pipeline, pull its encoder
+        if hasattr(cat_transformer, "named_steps"):
+            encoder = cat_transformer.named_steps.get("encoder")
+        else:
+            encoder = cat_transformer
+
+        if encoder is None or encoder == "passthrough":
+            transformed_features.extend(categorical_features)
+        elif hasattr(encoder, "get_feature_names_out"):
+            transformed_features.extend(encoder.get_feature_names_out(categorical_features).tolist())
+        else:
+            transformed_features.extend(categorical_features)
+    else:
+        transformed_features.extend(categorical_features)
+
+    return transformed_features
+
+
 def evaluate_model(pipe, X_train, X_test, y_train, y_test) -> Dict[str, Any]:
     pipe.fit(X_train, y_train)
     pred = pipe.predict(X_test)
